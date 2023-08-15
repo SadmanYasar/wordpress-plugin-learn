@@ -7,11 +7,20 @@ services:
     # image: mysql:5.7 indicates the MySQL database container image from Docker Hub used in this installation.
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: MyR00tMySQLPa$$5w0rD
+      MYSQL_ROOT_PASSWORD: "${DB_ROOT_PASSWORD}"
       MYSQL_DATABASE: MyWordPressDatabaseName
       MYSQL_USER: MyWordPressUser
-      MYSQL_PASSWORD: Pa$$5w0rD
+      MYSQL_PASSWORD: "${DB_USER_PASSWORD}"
       # Previous four lines define the main variables needed for the MySQL container to work: database, database username, database user password, and the MySQL root password.
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    restart: always
+    environment:
+      PMA_HOST: db
+      PMA_USER: MyWordPressUser
+      PMA_PASSWORD: "${PMA_PASSWORD}"
+    ports:
+      - "8080:80"
   wordpress:
     depends_on:
       - db
@@ -24,7 +33,7 @@ services:
     environment:
       WORDPRESS_DB_HOST: db:3306
       WORDPRESS_DB_USER: MyWordPressUser
-      WORDPRESS_DB_PASSWORD: Pa$$5w0rD
+      WORDPRESS_DB_PASSWORD: "${DB_USER_PASSWORD}"
       WORDPRESS_DB_NAME: MyWordPressDatabaseName
 # Similar to MySQL image variables, the last four lines define the main variables needed for the WordPress container to work properly with the MySQL container.
     volumes:

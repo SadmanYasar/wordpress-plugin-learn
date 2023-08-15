@@ -5,6 +5,7 @@
 #
 # Note: if you want to stage/commit WP core files
 # you can delete this whole section/until Configuration.
+secrets
 /wp-admin/
 /wp-content/index.php
 /wp-content/languages
@@ -34,6 +35,9 @@ wp-config.php
 
 # htaccess
 /.htaccess
+
+# environment variables
+/.env
 
 # All plugins
 #
